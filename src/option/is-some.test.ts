@@ -4,6 +4,9 @@ describe("Option.isSome", () => {
   it("should return true if option isSome", () => {
     const option = Option.of("foo");
     expect(option.isSome()).toBe(true);
+    if (option.isSome()) {
+      expect(option.get()).toBe("foo");
+    }
   });
 
   it("should return false if option isNone", () => {

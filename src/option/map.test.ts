@@ -26,7 +26,7 @@ describe("Option.map", () => {
     expect(() =>
       option.map(() => {
         throw new Error("foo");
-      })
+      }),
     ).toThrow();
   });
 
@@ -35,7 +35,7 @@ describe("Option.map", () => {
     expect(() =>
       option.map(() => {
         throw "foo";
-      })
+      }),
     ).toThrow();
   });
 
