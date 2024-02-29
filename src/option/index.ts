@@ -53,6 +53,8 @@ export abstract class Option<T> {
   public abstract isSome(): this is Some<NonNullable<T>>;
   public abstract isSomeAnd(predicate: (value: T) => Promise<boolean>): Promise<boolean>;
   public abstract isSomeAnd(predicate: (value: T) => boolean): boolean;
+  public abstract inspect(fn: (value: T) => Promise<void>): Promise<this>;
+  public abstract inspect(fn: (value: T) => void): this;
   public abstract map<U>(mapper: (value: T) => Promise<U>): Promise<Optional<U>>;
   public abstract map<U>(mapper: (value: T) => U): Optional<U>;
   public abstract mapOr<U>(value: U, mapper: (value: T) => Promise<U>): Promise<U>;
@@ -68,17 +70,44 @@ export abstract class Option<T> {
   public abstract unwrapOr(other: T): T;
   public abstract unwrapOrElse(other: () => Promise<T>): Promise<T>;
   public abstract unwrapOrElse(other: () => T): T;
-  public abstract xor(other: Optional<T>): Optional<T | T>;
+  public abstract unwrapOrUndefined(): T | undefined;
+  public abstract unwrapOrNull(): T | null;
+  public abstract unzip<A, B>(this: Optional<[A, B]>): [Optional<A>, Optional<B>];
+  public abstract xor<U>(other: Optional<U>): Optional<T | U>;
   public abstract zip<U>(other: Optional<U>): Optional<[T, U]>;
+  public abstract zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => Promise<V>): Promise<Optional<V>>;
+  public abstract zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => V): Optional<V>;
+
+  protected toJSON(): T | undefined {
+    return this.value;
+  }
+
+  protected toString(): string {
+    return this.value == null ? "None" : `Some(${this.value})`;
+  }
+
+  protected valueOf(): T | undefined {
+    return this.value;
+  }
+
+  protected [Symbol.hasInstance](instance: any): boolean {
+    return instance instanceof Option;
+  }
+
+  protected [Symbol.iterator](): IterableIterator<T> {
+    return (function* (value: T) {
+      yield value;
+    })(this.value!);
+  }
 }
 
-class None<T> extends Option<T> {
+export class None<T> extends Option<T> {
   public and<U>(_other: Optional<U>): Optional<U> {
     return this as unknown as None<U>;
   }
 
-  public andThen<U>(mapper: (value: T) => Promise<Optional<U>>): Promise<Optional<U>>;
-  public andThen<U>(mapper: (value: T) => Optional<U>): Optional<U>;
+  public andThen<U>(mapper: (value: T) => Promise<None<U>>): Promise<None<U>>;
+  public andThen<U>(mapper: (value: T) => None<U>): None<U>;
   public andThen<U>(_mapper: (value: T) => Optional<U> | Promise<Optional<U>>): Optional<U> | Promise<Optional<U>> {
     return this as unknown as None<U>;
   }
@@ -105,9 +134,7 @@ class None<T> extends Option<T> {
   }
 
   public filter(predicate: (value: T) => Promise<boolean>): Promise<None<T>>;
-  public filter(predicate: (value: T) => Promise<boolean>): Promise<Optional<T>>;
   public filter(predicate: (value: T) => boolean): None<T>;
-  public filter(predicate: (value: T) => boolean): Optional<T>;
   public filter(_predicate: (value: T) => boolean | Promise<boolean>): Optional<T> | Promise<Optional<T>> {
     return this as unknown as None<T>;
   }
@@ -118,7 +145,7 @@ class None<T> extends Option<T> {
     return this as unknown as U;
   }
 
-  public flatten<U>(this: Optional<Optional<U>>): Optional<U> {
+  public flatten<U>(this: None<Optional<U>>): None<U> {
     return this as unknown as None<U>;
   }
 
@@ -140,6 +167,12 @@ class None<T> extends Option<T> {
   public isSomeAnd(predicate: (value: T) => boolean): boolean;
   public isSomeAnd(_predicate: (value: T) => boolean | Promise<boolean>): boolean | Promise<boolean> {
     return false;
+  }
+
+  public inspect(fn: (value: T) => Promise<void>): Promise<this>;
+  public inspect(fn: (value: T) => void): this;
+  public inspect(_fn: (value: T) => void | Promise<void>): this | Promise<this> {
+    return this;
   }
 
   public map<U>(mapper: (value: T) => Promise<U>): Promise<None<U>>;
@@ -190,24 +223,46 @@ class None<T> extends Option<T> {
     return other;
   }
 
+  public unwrapOrUndefined(): T | undefined {
+    return undefined;
+  }
+
+  public unwrapOrNull(): T | null {
+    return null;
+  }
+  public unzip<A, B>(this: None<[A, B]>): [Optional<A>, Optional<B>] {
+    return [Option.none(), Option.none()];
+  }
+
+  protected valueOf(): T | undefined {
+    return undefined;
+  }
+
   public unwrapOrElse(other: () => Promise<T>): Promise<T>;
   public unwrapOrElse(other: () => T): T;
   public unwrapOrElse(other: () => T | Promise<T>): T | Promise<T> {
     return other();
   }
 
-  public xor(other: Optional<T>): Optional<T> {
+  public xor<U>(other: Optional<U>): Optional<T | U> {
     return other;
   }
 
   public zip<U>(_other: Optional<U>): Optional<[T, U]> {
     return this as unknown as None<[T, U]>;
   }
+
+  public zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => Promise<V>): Promise<Optional<V>>;
+  public zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => V): Optional<V>;
+  public zipWith<U, V>(
+    _other: Optional<U>,
+    _zipper: (a: T, b: U) => V | Promise<V>
+  ): Optional<V> | Promise<Optional<V>> {
+    return this as unknown as None<V>;
+  }
 }
 
-class Some<T> extends Option<T> {
-  // #region Public Methods (52)
-
+export class Some<T> extends Option<T> {
   public and<U>(other: Optional<U>): Optional<U> {
     return other;
   }
@@ -289,6 +344,17 @@ class Some<T> extends Option<T> {
     return predicate(this.get());
   }
 
+  public inspect(fn: (value: T) => Promise<void>): Promise<this>;
+  public inspect(fn: (value: T) => void): this;
+  public inspect(fn: (value: T) => void | Promise<void>): this | Promise<this> {
+    const result = fn(this.get());
+    if (result instanceof Promise) {
+      return result.then(() => this);
+    }
+
+    return this;
+  }
+
   public map<U>(mapper: (value: T) => Promise<NonNullable<U>>): Promise<Some<NonNullable<U>>>;
   public map<U>(mapper: (value: T) => Promise<U>): Promise<Optional<U>>;
   public map<U>(mapper: (value: T) => NonNullable<U>): Some<NonNullable<U>>;
@@ -344,17 +410,41 @@ class Some<T> extends Option<T> {
     return this.get();
   }
 
-  public xor(other: Optional<T>): Optional<T> {
-    if (other.isNone()) {
-      return this;
-    }
+  public unwrapOrNull(): T | null {
+    return this.get();
+  }
 
-    return Option.none();
+  public unwrapOrUndefined(): T | undefined {
+    return this.get();
+  }
+
+  public unzip<A, B>(this: Some<[A, B]>): [Optional<A>, Optional<B>] {
+    const value = this.get();
+    return [Option.of(value[0]), Option.of(value[1])];
+  }
+
+  public xor<U>(_other: Optional<U>): Optional<T | U> {
+    return this;
   }
 
   public zip<U>(other: Optional<U>): Optional<[T, U]> {
     if (other.isSome()) {
       return Option.some([this.get(), other.get()]);
+    }
+
+    return Option.none();
+  }
+
+  public zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => Promise<V>): Promise<Optional<V>>;
+  public zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => V): Optional<V>;
+  public zipWith<U, V>(other: Optional<U>, zipper: (a: T, b: U) => V | Promise<V>): Optional<V> | Promise<Optional<V>> {
+    if (other.isSome()) {
+      const result = zipper(this.get(), other.get());
+      if (result instanceof Promise) {
+        return result.then((value) => Option.of(value));
+      }
+
+      return Option.of(result);
     }
 
     return Option.none();

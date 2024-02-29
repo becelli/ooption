@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES2021",
+    "target": "ESNext",
     "strict": true,
     "declaration": true,
     "outDir": "./dist",
@@ -18,7 +18,7 @@
     "downlevelIteration": true,
     "skipLibCheck": false,
     "allowJs": false,
-    "lib": ["ES2023"],
+    "lib": ["ESNext"],
     "declarationMap": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,

@@ -2,13 +2,15 @@ import { Option } from ".";
 
 describe("Option.equals", () => {
   it("should return true if both Options are None", async () => {
-    const value = await Option.none<number>().equals(Option.none<number>(), async (a, b) => a === b);
-    expect(value).toBe(true);
+    const value = Option.none<number>();
+    const equal = await value.equals(Option.none<number>(), async (a, b) => a === b);
+    expect(equal).toBe(true);
   });
 
   it("should return false if one Option is None", async () => {
-    const value = await Option.none<number>().equals(Option.some(1), async (a, b) => a === b);
-    expect(value).toBe(false);
+    const value = Option.none<number>();
+    const equal = await value.equals(Option.some(1), async (a, b) => a === b);
+    expect(equal).toBe(false);
   });
 
   it("should return true if both Options are Some and the values are equal", async () => {

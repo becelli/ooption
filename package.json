@@ -3,6 +3,7 @@
   "description": "A optional type that fits nicely with Object Oriented Programming",
   "author": "becelli",
   "version": "2.1.1",
+  "exports": "./src/index",
   "scripts": {
     "test": "jest --maxWorkers=50% --watch --coverage",
     "build:watch": "tsc --watch",
