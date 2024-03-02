@@ -42,7 +42,7 @@ describe("Option.map", () => {
   it("should infer the value is some if the function returns a non-nullable value", () => {
     const option = Option.some("foo");
     const result = option.map((value) => value.toUpperCase());
-    expect(result.get()).toBe("FOO");
+    expect(result.value).toBe("FOO");
   });
 
   it("should infer the value is none if the function returns a nullable value", () => {

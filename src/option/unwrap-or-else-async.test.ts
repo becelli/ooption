@@ -2,7 +2,7 @@ import { Option } from ".";
 
 describe("Option.unwrapOrElse", () => {
   it("should return the value if option isSome", async () => {
-    const option = Option.of("foo");
+    const option = Option.of<string>("foo");
     expect(await option.unwrapOrElse(() => Promise.resolve("bar"))).toBe("foo");
   });
 

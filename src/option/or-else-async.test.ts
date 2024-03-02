@@ -2,7 +2,7 @@ import { Option } from ".";
 
 describe("Option.orElse", () => {
   it("should return the option if option isSome", async () => {
-    const option = Option.of("foo");
+    const option = Option.of<string>("foo");
     expect(await option.orElse(() => Promise.resolve(Option.of("bar")))).toBe(option);
   });
 
