@@ -2,8 +2,16 @@
   "name": "ooptional",
   "description": "TypeScript optional types with seamless async support and magical type inference",
   "author": "becelli",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "exports": "./src/index",
+  "files": [
+    "dist"
+  ],
+  "maintainers": [
+    {
+      "name": "becelli"
+    }
+  ],
   "scripts": {
     "test": "jest --watch --coverage --runInBand --detectOpenHandles --forceExit",
     "build:watch": "tsc --watch",
