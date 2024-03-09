@@ -5,7 +5,7 @@ describe("Option.isSome", () => {
     const option = Option.of("foo");
     expect(option.isSome()).toBe(true);
     if (option.isSome()) {
-      expect(option.value).toBe("foo");
+      expect(option.unwrap()).toBe("foo");
     }
   });
 

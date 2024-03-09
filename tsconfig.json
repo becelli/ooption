@@ -10,7 +10,7 @@
     "esModuleInterop": false,
     "removeComments": false,
     "moduleResolution": "Node",
-    "sourceMap": false,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "incremental": false,
@@ -18,7 +18,9 @@
     "downlevelIteration": true,
     "skipLibCheck": false,
     "allowJs": false,
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "declarationMap": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
@@ -29,6 +31,13 @@
     "noErrorTruncation": true,
     "baseUrl": "./"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
