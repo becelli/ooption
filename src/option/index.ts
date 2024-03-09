@@ -1,3 +1,6 @@
+import assert = require("assert");
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export type Optional<A> = None<A> | Some<A>;
 
 /**
@@ -84,7 +87,7 @@ export abstract class Option<A> {
   }
 
   toString(): string {
-    return this._value == null ? "None" : `Some(${this._value})`;
+    return this._value == null ? "None" : `Some(${String(this._value)})`;
   }
 
   valueOf(): A | undefined {
@@ -267,7 +270,7 @@ export class Some<A> extends Option<A> {
   public andThen<B>(mapper: (value: A) => None<B>): None<B>;
   public andThen<B>(mapper: (value: A) => Optional<B>): Optional<B>;
   public andThen<B>(mapper: (value: A) => Optional<B> | Promise<Optional<B>>): Optional<B> | Promise<Optional<B>> {
-    return mapper(this._value!);
+    return mapper(this.unwrap());
   }
 
   public equals(other: Optional<A>, comparator?: ((a: A, b: A) => Promise<boolean>) | undefined): Promise<boolean>;
@@ -367,8 +370,8 @@ export class Some<A> extends Option<A> {
     return mapper(this.unwrap());
   }
 
-  public mapOrElse<B>(orElse: () => B, mapper: (value: A) => B): B;
   public mapOrElse<B>(orElse: () => Promise<B>, mapper: (value: A) => Promise<B>): Promise<B>;
+  public mapOrElse<B>(orElse: () => B, mapper: (value: A) => B): B;
   public mapOrElse<B>(_orElse: () => B | Promise<B>, mapper: (value: A) => B | Promise<B>): B | Promise<B> {
     return mapper(this.unwrap());
   }
@@ -384,7 +387,8 @@ export class Some<A> extends Option<A> {
   }
 
   public unwrap(): A {
-    return this._value!;
+    assert(this._value != null, "Value is null or undefined");
+    return this._value;
   }
 
   public unwrapOr(_other: A): A {

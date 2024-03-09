@@ -4,40 +4,35 @@
     "target": "ESNext",
     "strict": true,
     "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
+    "rootDir": "src/",
     "checkJs": false,
     "esModuleInterop": false,
     "removeComments": false,
-    "moduleResolution": "Node",
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "incremental": false,
-    "moduleDetection": "force",
+    "incremental": true,
     "downlevelIteration": true,
     "skipLibCheck": false,
     "allowJs": false,
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "declarationMap": true,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "noErrorTruncation": true,
-    "baseUrl": "./"
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }
