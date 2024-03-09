@@ -12,7 +12,9 @@ describe("Option.isSome", () => {
   it("should return false if option isNone", () => {
     const option = Option.none();
     if (option.isSome()) {
-      expect(option.unwrap()).toBe("foo");
+      // @ts-expect-error option should be a never
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
+      expect(() => option.unwrap()).toThrow();
     }
     expect(option.isSome()).toBe(false);
   });
