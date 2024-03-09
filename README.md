@@ -93,7 +93,9 @@ You can easily check if an `Optional` has a value using the `isSome()` method. I
 const optional: Optional<string> = Option.of("Hello, world!");
 
 if (optional.isSome()) {
-  console.log(`The type is inferred as Some<string>, and you can access the value using the get() method: ${optional.value}`);
+  console.log(
+    `The type is inferred as Some<string>, and you can access the value using the get() method: ${optional.value}`,
+  );
 } else {
   console.log("It is None");
 }

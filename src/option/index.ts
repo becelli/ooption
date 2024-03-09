@@ -8,7 +8,7 @@ export type Optional<A> = None<A> | Some<A>;
  * It is designed to fit nicely with Object Oriented Programming.
  */
 export abstract class Option<A> {
-  protected constructor(protected _value?: A) { }
+  protected constructor(protected _value?: A) {}
 
   public static none<B>(): None<B> {
     return new None();
@@ -24,7 +24,7 @@ export abstract class Option<A> {
   public static ofThrowable<B>(throwable: () => Promise<B>): Promise<Optional<NonNullable<B>>>;
   public static ofThrowable<B>(throwable: () => B): Optional<NonNullable<B>>;
   public static ofThrowable<B>(
-    throwable: () => B | Promise<B>
+    throwable: () => B | Promise<B>,
   ): Optional<NonNullable<B>> | Promise<Optional<NonNullable<B>>> {
     try {
       const result = throwable();
@@ -40,6 +40,18 @@ export abstract class Option<A> {
 
   public static some<B>(value: NonNullable<B>): Some<NonNullable<B>> {
     return new Some(value);
+  }
+
+  protected toJSON(): A | undefined {
+    return this._value;
+  }
+
+  protected toString(): string {
+    return this._value == null ? "None" : `Some(${String(this._value)})`;
+  }
+
+  protected valueOf(): A | undefined {
+    return this._value;
   }
 
   public abstract andThen<B>(mapper: (value: A) => Promise<Optional<B>>): Promise<Optional<B>>;
@@ -81,18 +93,6 @@ export abstract class Option<A> {
   public abstract zipWith<B, V>(other: Optional<B>, zipper: (a: A, b: B) => Promise<V>): Promise<Optional<V>>;
   public abstract zipWith<B, V>(other: Optional<B>, zipper: (a: A, b: B) => V): Optional<V>;
   public abstract zip<B>(other: Optional<B>): Optional<[A, B]>;
-
-  toJSON(): A | undefined {
-    return this._value;
-  }
-
-  toString(): string {
-    return this._value == null ? "None" : `Some(${String(this._value)})`;
-  }
-
-  valueOf(): A | undefined {
-    return this._value;
-  }
 }
 
 export class None<A> extends Option<A> {
@@ -110,7 +110,7 @@ export class None<A> extends Option<A> {
   public equals(other: Optional<A>, comparator?: (a: A, b: A) => boolean): boolean;
   public equals(
     other: Optional<A>,
-    _comparator?: ((a: A, b: A) => boolean) | ((a: A, b: A) => Promise<boolean>)
+    _comparator?: ((a: A, b: A) => boolean) | ((a: A, b: A) => Promise<boolean>),
   ): boolean | Promise<boolean> {
     if (other.isNone()) {
       return true;
@@ -250,7 +250,7 @@ export class None<A> extends Option<A> {
   public zipWith<B, V>(other: Optional<B>, zipper: (a: A, b: B) => V): Optional<V>;
   public zipWith<B, V>(
     _other: Optional<B>,
-    _zipper: (a: A, b: B) => V | Promise<V>
+    _zipper: (a: A, b: B) => V | Promise<V>,
   ): Optional<V> | Promise<Optional<V>> {
     return this as unknown as None<V>;
   }
@@ -277,7 +277,7 @@ export class Some<A> extends Option<A> {
   public equals(other: Optional<A>, comparator?: ((a: A, b: A) => boolean) | undefined): boolean;
   public equals(
     other: Optional<A>,
-    comparator: ((a: A, b: A) => boolean) | ((a: A, b: A) => Promise<boolean>) = (a, b) => a === b
+    comparator: ((a: A, b: A) => boolean) | ((a: A, b: A) => Promise<boolean>) = (a, b) => a === b,
   ): boolean | Promise<boolean> {
     if (other.isSome()) {
       return comparator(this.unwrap(), other.unwrap());

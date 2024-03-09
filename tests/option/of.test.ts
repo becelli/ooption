@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.of", () => {
   it("should return a Some when the value is not null or undefined", () => {

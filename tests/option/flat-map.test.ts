@@ -1,4 +1,4 @@
-import { Option, type None, type Some } from '../../src/option/index';
+import { Option, type None, type Some } from "../../src/option/index";
 
 describe("Option.flatMap", () => {
   it("should return the result of the function", () => {
@@ -32,7 +32,9 @@ describe("Option.flatMap", () => {
   });
   it("should return the result of the function", async () => {
     const option = Option.of("foo");
-    expect(await option.flatMap(async (value) => await Promise.resolve(Option.of(value + "bar")))).toEqual(Option.of("foobar"));
+    expect(await option.flatMap(async (value) => await Promise.resolve(Option.of(value + "bar")))).toEqual(
+      Option.of("foobar"),
+    );
   });
 
   it("should return None if function returns None", async () => {

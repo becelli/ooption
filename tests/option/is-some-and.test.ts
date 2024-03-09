@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.isSomeAnd", () => {
   it("should return true if the value isSomeAnd the predicate", () => {

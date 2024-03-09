@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.mapOr", () => {
   it("should apply the function to the value of a Some", () => {

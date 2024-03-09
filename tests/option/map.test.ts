@@ -1,11 +1,11 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
+// eslint-disable-next-line max-statements
 describe("Option.map", () => {
   it("should return the mapped value if option isSome", () => {
     const option = Option.of("foo");
     expect(option.map((value) => value.toUpperCase())).toEqual(Option.of("FOO"));
   });
-
   it("should return the option if option isNone", () => {
     const option = Option.none<string>();
     expect(option.map((value) => value.toUpperCase())).toBe(option);
@@ -82,7 +82,7 @@ describe("Option.map", () => {
 
   it("should infer the value is none if the function returns a nullable value", async () => {
     const option = Option.some<string>("foo");
-    const result = await option.map(async (value) => await Promise.resolve((value === "foo" ? null : value)));
+    const result = await option.map(async (value) => await Promise.resolve(value === "foo" ? null : value));
     expect(result.isNone()).toBe(true);
   });
 });

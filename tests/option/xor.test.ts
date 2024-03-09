@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.xor", () => {
   it("should return None if both options are None", () => {
@@ -28,4 +28,4 @@ describe("Option.xor", () => {
     const result2 = b.xor(a);
     expect(result2).toEqual(Option.none());
   });
-})
+});

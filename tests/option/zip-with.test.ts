@@ -1,5 +1,4 @@
-
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.zipWith", () => {
   it("should zip two options together", () => {
@@ -14,7 +13,7 @@ describe("Option.zipWith", () => {
     const b = Option.some(2);
     const result = await a.zipWith(b, async (x, y) => Promise.resolve(x + y));
     expect(result).toEqual(Option.some(3));
-  })
+  });
 
   it("should return None if either option is None", () => {
     const a = Option.none<number>();
@@ -42,6 +41,5 @@ describe("Option.zipWith", () => {
     const b = Option.none<string>();
     const result = a.zipWith(b, (x, y) => x + y);
     expect(result).toEqual(Option.none());
-  })
-
+  });
 });

@@ -23,6 +23,5 @@ describe("Option.andThen", () => {
     // @ts-expect-error - The value failed to be inferred as Some<number>
     const valueNone: None<number> = Option.some(1).andThen((value) => Option.some(value + 1));
     expect(valueNone.isSome()).toBe(true);
-
   });
 });

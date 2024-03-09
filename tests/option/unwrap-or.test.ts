@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.unwrapOrElse", () => {
   it("should return the value if option isSome", () => {

@@ -1,4 +1,4 @@
-import { Option, type None, type Some } from '../../src/option/index';
+import { Option, type None, type Some } from "../../src/option/index";
 
 describe("Option.and", () => {
   it("should return None when the value is None", () => {

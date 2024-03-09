@@ -1,4 +1,4 @@
-import { Option, type None, type Optional, type Some } from '../../src/option/index';
+import { Option, type None, type Optional, type Some } from "../../src/option/index";
 describe("Option.flatten", () => {
   it("should flatten a nested Option", () => {
     const nested: Optional<Optional<number>> = Option.some(Option.some(42));

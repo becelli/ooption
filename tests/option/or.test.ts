@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.or", () => {
   it("should return the option if it is Some", () => {
@@ -15,4 +15,4 @@ describe("Option.or", () => {
     const other = Option.none<string>();
     expect(option.or(other)).toBe(other);
   });
-})
+});

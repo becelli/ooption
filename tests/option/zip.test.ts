@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.zip", () => {
   it("should zip two options together", () => {
@@ -19,5 +19,5 @@ describe("Option.zip", () => {
     const b = Option.none<number>();
     const result = a.zip(b);
     expect(result).toEqual(Option.none());
-  })
+  });
 });

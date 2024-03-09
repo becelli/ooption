@@ -1,5 +1,6 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
+// eslint-disable-next-line max-statements
 describe("Option.equals", () => {
   it("should return true if both options are None", () => {
     const option1 = Option.none();
@@ -78,12 +79,18 @@ describe("Option.equals", () => {
   });
 
   it("should return false if both Options are Some and the values are not equal", async () => {
-    const value = await Option.some<number>(1).equals(Option.some<number>(2), async (a, b) => await Promise.resolve(a === b));
+    const value = await Option.some<number>(1).equals(
+      Option.some<number>(2),
+      async (a, b) => await Promise.resolve(a === b),
+    );
     expect(value).toBe(false);
   });
 
   it("should use the provided equality function", async () => {
-    await Option.some({ foo: "bar" }).equals(Option.some({ foo: "bar" }), async (a, b) => await Promise.resolve(a.foo === b.foo))
+    await Option.some({ foo: "bar" }).equals(
+      Option.some({ foo: "bar" }),
+      async (a, b) => await Promise.resolve(a.foo === b.foo),
+    );
   });
 
   it("should use the default equality function if none is provided", async () => {

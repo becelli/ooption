@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.expect", () => {
   it("should return the value if option isSome", () => {
@@ -20,5 +20,5 @@ describe("Option.expect", () => {
   it("should throw custom error if option isNone", () => {
     const option = Option.none();
     expect(() => option.expect(new Error("bar"))).toThrow("bar");
-  })
-})
+  });
+});

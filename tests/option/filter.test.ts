@@ -1,5 +1,6 @@
 import { Option, type None, type Some } from "../../src/option/index";
 
+// eslint-disable-next-line max-statements
 describe("Option.filter", () => {
   it("should return the option if predicate returns true", () => {
     const option = Option.of<string>("foo");

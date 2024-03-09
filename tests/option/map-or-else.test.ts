@@ -5,7 +5,7 @@ describe("Option.mapOrElse", () => {
     const myNumber = 42;
     const value = Option.some(myNumber);
     const mockElse: () => number = jest.fn();
-    const mockMap: (n: number ) => number = jest.fn<number, [number]>((n) => n ** 2);
+    const mockMap: (n: number) => number = jest.fn<number, [number]>((n) => n ** 2);
     const result = value.mapOrElse(mockElse, mockMap);
     expect(result).toBe(myNumber ** 2);
     expect(mockElse).not.toHaveBeenCalled();
@@ -15,7 +15,7 @@ describe("Option.mapOrElse", () => {
   it("should apply the orElse function for a None", () => {
     const value = Option.none<number>();
     const mockElse: () => number = jest.fn();
-    const mockMap: (n: number ) => number = jest.fn<number, [number]>((n) => n ** 2);
+    const mockMap: (n: number) => number = jest.fn<number, [number]>((n) => n ** 2);
 
     value.mapOrElse(mockElse, mockMap);
     expect(mockElse).toHaveBeenCalledTimes(1);

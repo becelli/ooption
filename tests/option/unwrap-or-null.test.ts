@@ -1,4 +1,4 @@
-import { Option } from '../../src/option/index';
+import { Option } from "../../src/option/index";
 
 describe("Option.unwrapOrNull", () => {
   it("should return the value if option isSome", () => {
@@ -17,4 +17,4 @@ describe("Option.unwrapOrNull", () => {
     const option = Option.of<string>(undefined);
     expect(option.unwrapOrNull()).toBeNull();
   });
-})
+});
