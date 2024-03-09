@@ -2,7 +2,7 @@
 [![npm version](https://badge.fury.io/js/ooptional.svg)](https://badge.fury.io/js/ooptional)
 ## OOptional - TypeScript optional types with seamless async support and 🪄 magical 🪄 type inference
 
-**OOPtional** empowers you to write robust and expressive TypeScript code by elegantly handling optional values within functional or object-oriented design patterns.  This library eliminates the need for cumbersome null and undefined checks, leading to cleaner, more maintainable code. Experience the magic of its seamless type inference!
+**OOPtional** empowers you to write robust and expressive TypeScript code by elegantly handling optional values within functional or object-oriented design patterns.  This library eliminates the need for cumbersome null and undefined checks, leading to cleaner, more maintainable code. Experience the magic of its seamless type inference with zero dependencies!
 
 **Key Features:**
 
