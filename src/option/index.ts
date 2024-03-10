@@ -372,11 +372,7 @@ export class None<A> extends Option<A> {
     other: Optional<A>,
     _comparator?: ((a: A, b: A) => boolean) | ((a: A, b: A) => Promise<boolean>)
   ): boolean | Promise<boolean> {
-    if (other.isNone()) {
-      return true;
-    }
-
-    return false;
+    return other.isNone();
   }
 
   public expect(error: string | Error): A {
