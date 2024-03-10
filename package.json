@@ -2,7 +2,7 @@
   "name": "ooptional",
   "description": "TypeScript optional types with seamless async support and magical type inference",
   "author": "becelli",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "maintainers": [{ "name": "becelli" }],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
